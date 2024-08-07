@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import Widget from "featureos-widget";
 
 function CustomTrigger() {
-  const [bucketId, setBucketId] = useState<number | any>(null);
   const widget = useRef<any>(null);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ function CustomTrigger() {
     }
   }, []);
 
-  useEffect(() => {
+  const setWidgetBucketId = (bucketId: number | any) => {
     if (widget.current) {
       let submissionBucketIds: any[] = [];
 
@@ -48,41 +47,23 @@ function CustomTrigger() {
           : undefined,
         submissionBucketIds: bucketId ? submissionBucketIds : undefined,
       });
+      widget.current.open();
     }
-  }, [bucketId]);
+  };
 
   return (
     <div className="flex gap-3">
       <button
-        id="trigger"
-        className="p-2 border bg-[#223558] text-white hover:bg-[#223558b3] rounded-md hover:"
-      >
-        Custom Trigger
-      </button>
-
-      <button
-        onClick={() => {
-          setBucketId(5219);
-        }}
+        onClick={() => setWidgetBucketId(5219)}
         className="p-2 border bg-[#223558] text-white hover:bg-[#223558b3] rounded-md"
       >
         Bills Bucket
       </button>
       <button
-        onClick={() => {
-          setBucketId(5214);
-        }}
+        onClick={() => setWidgetBucketId(5214)}
         className="p-2 border bg-[#223558] text-white hover:bg-[#223558b3] rounded-md"
       >
         Permits Bucket
-      </button>
-      <button
-        onClick={() => {
-          setBucketId(null);
-        }}
-        className="p-2 border bg-[#223558] text-white hover:bg-[#223558b3] rounded-md"
-      >
-        All Bucket
       </button>
     </div>
   );
